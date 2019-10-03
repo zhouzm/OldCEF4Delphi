@@ -10,7 +10,7 @@
 // For more information about OldCEF4Delphi visit :
 //         https://www.briskbard.com/index.php?lang=en&pageid=cef
 //
-//        Copyright © 2019 Salvador Díaz Fau. All rights reserved.
+//        Copyright ?2019 Salvador Díaz Fau. All rights reserved.
 //
 // ************************************************************************
 // ************ vvvv Original license and comments below vvvv *************
@@ -75,6 +75,7 @@ type
       FLocalesRequired               : ustring;
       FLogFile                       : ustring;
       FBrowserSubprocessPath         : ustring;
+      FFrameworkDirPath              : ustring;
       FCustomFlashPath               : ustring;
       FLogSeverity                   : TCefLogSeverity;
       FJavaScriptFlags               : ustring;
@@ -319,6 +320,7 @@ type
       property DeviceScaleFactor                 : single                              read FDeviceScaleFactor;
       property CheckDevToolsResources            : boolean                             read FCheckDevToolsResources            write FCheckDevToolsResources;
       property LocalesRequired                   : ustring                             read FLocalesRequired                   write FLocalesRequired;
+      property FrameworkDirPath                  : ustring                             read FFrameworkDirPath                  write FFrameworkDirPath;
       property CustomFlashPath                   : ustring                             read FCustomFlashPath                   write FCustomFlashPath;
       property ProcessType                       : TCefProcessType                     read FProcessType;
       property MustCreateResourceBundleHandler   : boolean                             read GetMustCreateResourceBundleHandler write FMustCreateResourceBundleHandler;
@@ -611,7 +613,7 @@ end;
 
 function TCefApplication.GetLibCefPath : string;
 begin
-  Result := LIBCEF_DLL;
+  Result := IncludeTrailingPathDelimiter(FrameworkDirPath) + LIBCEF_DLL;
 end;
 
 procedure TCefApplication.SetCache(const aValue : ustring);
@@ -726,7 +728,7 @@ begin
         end;
 
       TempMissingSubProc := not(CheckSubprocessPath(FBrowserSubprocessPath, FMissingLibFiles));
-      TempMissingFrm     := not(CheckDLLs('', FMissingLibFiles));
+      TempMissingFrm     := not(CheckDLLs(LibCefPath, FMissingLibFiles));
       TempMissingRsc     := not(CheckResources(FResourcesDirPath, FMissingLibFiles, FCheckDevToolsResources));
       TempMissingLoc     := not(CheckLocales(FLocalesDirPath, FMissingLibFiles, FLocalesRequired));
 
