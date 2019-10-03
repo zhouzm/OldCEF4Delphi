@@ -728,7 +728,7 @@ begin
         end;
 
       TempMissingSubProc := not(CheckSubprocessPath(FBrowserSubprocessPath, FMissingLibFiles));
-      TempMissingFrm     := not(CheckDLLs(LibCefPath, FMissingLibFiles));
+      TempMissingFrm     := not(CheckDLLs(FrameworkDirPath, FMissingLibFiles));
       TempMissingRsc     := not(CheckResources(FResourcesDirPath, FMissingLibFiles, FCheckDevToolsResources));
       TempMissingLoc     := not(CheckLocales(FLocalesDirPath, FMissingLibFiles, FLocalesRequired));
 
